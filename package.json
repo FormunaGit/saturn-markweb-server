@@ -1,0 +1,24 @@
+{
+  "name": "saturn-markweb-server",
+  "version": "1.0.0",
+  "description": "The new official Markweb server, now in TypeScript",
+  "main": "index.js",
+  "scripts": {
+      "start": "ts-node src/index.ts",
+  "dev": "nodemon src/index.ts",
+  "build": "tsc",
+  "serve": "node dist/index.js"
+  },
+  "author": "FormunaGit",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.14",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
