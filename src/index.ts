@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import fs from "node:fs";
+import { processMarkdownWithMarkscript } from "./markscript";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,14 +15,34 @@ app.get("/page", (req: Request, res: Response) => {
 });
 
 app.get("/page/:id", (req: Request, res: Response) => {
-  fs.readFile(`./src/pages/${req.params.id}/index.md`, "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error reading file");
-      return;
-    }
-    res.send(data);
-  });
+  const basePagePath = `./src/pages/${req.params.id}`;
+  const processedContent = processMarkdownWithMarkscript(
+    basePagePath,
+    "index.md",
+  );
+  if (processedContent === null) {
+    res.status(500).send("Error processing page.");
+  } else {
+    res.send(processedContent);
+  }
+});
+
+app.get("/page/:id/:subpage", (req: Request, res: Response) => {
+  // Multi-page support
+  const basePagePath = `./src/pages/${req.params.id}`;
+  const subpageParam = req.params.subpage;
+  const markdownFilename = subpageParam.endsWith(".md")
+    ? subpageParam
+    : `${subpageParam}.md`;
+  const processedContent = processMarkdownWithMarkscript(
+    basePagePath,
+    markdownFilename,
+  );
+  if (processedContent === null) {
+    res.status(500).send("Error processing subpage.");
+  } else {
+    res.send(processedContent);
+  }
 });
 
 app.listen(PORT, () => {

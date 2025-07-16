@@ -10,6 +10,8 @@ Saturn MarkWeb Server (abbreviated to SMWS) is the current implementation of a M
 MarkWeb **servers** can be accessed via any protocol, although HTTP is recommended. They are responsible for **serving** MarkWeb pages, which are written in __Markdown__.
 MarkWeb **clients** access MarkWeb servers via whatever protocol is implemented (again, HTTP is recommended). They are responsible for **rendering** MarkWeb pages.
 
+The specifications are in their own page, available at foobar.dev/specs.
+
 ## Projects that use Markweb
 ### Legend
 - 🪦: The project is **no longer in development**.
