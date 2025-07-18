@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to the Node.js + TypeScript API!");
+  res.send("Hi! This is the Saturn MarkWeb API!");
 });
 
 app.get("/page", (req: Request, res: Response) => {
@@ -15,7 +15,7 @@ app.get("/page", (req: Request, res: Response) => {
 });
 
 app.get("/page/:id", (req: Request, res: Response) => {
-  const basePagePath = `./src/pages/${req.params.id}`;
+  const basePagePath = `./api/pages/${req.params.id}`;
   const processedContent = processMarkdownWithMarkscript(
     basePagePath,
     "index.md",
@@ -29,7 +29,7 @@ app.get("/page/:id", (req: Request, res: Response) => {
 
 app.get("/page/:id/:subpage", (req: Request, res: Response) => {
   // Multi-page support
-  const basePagePath = `./src/pages/${req.params.id}`;
+  const basePagePath = `./api/pages/${req.params.id}`;
   const subpageParam = req.params.subpage;
   const markdownFilename = subpageParam.endsWith(".md")
     ? subpageParam
