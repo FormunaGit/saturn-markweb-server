@@ -4,10 +4,10 @@
   "description": "The new official Markweb server, now in TypeScript",
   "main": "index.js",
   "scripts": {
-      "start": "ts-node src/index.ts",
-  "dev": "nodemon src/index.ts",
-  "build": "tsc",
-  "serve": "node dist/index.js"
+    "start": "ts-node api/index.ts",
+    "dev": "nodemon api/index.ts",
+    "build": "tsc",
+    "serve": "node dist/index.js"
   },
   "author": "FormunaGit",
   "license": "ISC",
