@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { processMarkdownWithMarkscript } from "./markscript";
+import path from "node:path";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,7 +16,7 @@ app.get("/page", (req: Request, res: Response) => {
 });
 
 app.get("/page/:id", (req: Request, res: Response) => {
-  const basePagePath = `./api/pages/${req.params.id}`;
+  const basePagePath = path.join(__dirname, "pages", req.params.id);
   const processedContent = processMarkdownWithMarkscript(
     basePagePath,
     "index.md",
@@ -29,7 +30,7 @@ app.get("/page/:id", (req: Request, res: Response) => {
 
 app.get("/page/:id/:subpage", (req: Request, res: Response) => {
   // Multi-page support
-  const basePagePath = `./api/pages/${req.params.id}`;
+  const basePagePath = path.join(__dirname, "pages", req.params.id);
   const subpageParam = req.params.subpage;
   const markdownFilename = subpageParam.endsWith(".md")
     ? subpageParam
