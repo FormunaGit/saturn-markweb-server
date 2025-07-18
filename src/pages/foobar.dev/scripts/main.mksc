@@ -1,4 +1,4 @@
-hh
+let x = Hello World!!!
 // This is a comment
-return Hello, World!
-// ^ This line will return Hello World!
+return $x
+// ^ This line will return Hello World!!!

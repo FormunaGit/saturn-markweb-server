@@ -6,13 +6,30 @@ import path from "node:path";
 
 function parser(markscript: string): string {
   // Implement parser logic here
-  let output = "";
+  let variables: any = {}; // Any variables used in the Markscript will be here.
   let code = markscript.split("\n");
   for (let line of code) {
     if (line.startsWith("//")) continue; // Single-line comment.
+    if (line.startsWith("let")) {
+      let variableName = line.split(" ")[1];
+      let variableValue = line.split("=")[1].trim();
+      variables[variableName] = variableValue;
+    }
     if (line.startsWith("return")) {
       // Return statement. Required.
-      return line.replace("return ", "");
+      let ret = line.replace("return ", "");
+      if (ret.trim().length === 0) {
+        return "[!Error: Empty return statement]";
+      } else if (ret.includes("$")) {
+        let variableName = ret.split("$")[1].trim();
+        if (variables[variableName]) {
+          return variables[variableName];
+        } else {
+          return `[!Error: Undefined variable ${variableName}]`;
+        }
+      } else {
+        return ret;
+      }
     }
   }
   return "[!Error: Missing return statement]";
