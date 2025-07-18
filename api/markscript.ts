@@ -45,6 +45,14 @@ export function processMarkdownWithMarkscript(
 ): string | null {
   const markdownFilePath = path.join(basePagePath, markdownFilename);
 
+  console.log(`[DEBUG] Current working directory: ${process.cwd()}`);
+  console.log(
+    `[DEBUG] Attempting to process Markdown file: ${markdownFilePath}`,
+  );
+  console.log(
+    `[DEBUG] basePagePath: ${basePagePath}, markdownFilename: ${markdownFilename}`,
+  );
+
   try {
     let markdownContent = fs.readFileSync(markdownFilePath, "utf-8");
 
@@ -58,12 +66,15 @@ export function processMarkdownWithMarkscript(
           "scripts",
           `${scriptName}.mksc`,
         );
+        console.log(
+          `[DEBUG] Attempting to read Markscript file: ${mkscFilePath}`,
+        );
         try {
           const mkscContent = fs.readFileSync(mkscFilePath, "utf-8");
           return markscripter(mkscContent);
         } catch (mkscErr: any) {
           console.error(
-            `Error reading Markscript file ${mkscFilePath}:`,
+            `[ERROR] Error reading Markscript file ${mkscFilePath}:`,
             mkscErr.message,
           );
           return `ERROR: Could not load Markscript '${scriptName}'`;
@@ -74,8 +85,10 @@ export function processMarkdownWithMarkscript(
     return processedContent;
   } catch (err: any) {
     console.error(
-      `Error processing Markdown file ${markdownFilePath}:`,
+      `[ERROR] Error processing Markdown file ${markdownFilePath}:`,
       err.message,
+      `Full error:`,
+      err,
     );
     return null;
   }
